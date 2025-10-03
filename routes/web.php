@@ -10,18 +10,25 @@ Route::get('/', [HomeYayasanController::class,'index'])->name('YayasanArticle.in
 
 
 Route::prefix('yayasan')->group(function () {
-
     // Route articles
     Route::get('article/{id}', function ($id) {
     $article = Content::findOrFail($id);
     return view('sites.yayasan.articles.show', compact('article'));
-});
+    });
 
     Route::get('articles',[YayasanArticleController::class,'index'])->name('YayasanArticle.index');
 
     // Route programs
     Route::get('programs', function () {
         return view('sites.yayasan.program.all');
+    });
+
+    Route::get('/galeri',function () {
+        return view('sites.yayasan.gallery.index');
+    });
+
+    Route::get('/profile',function () {
+        return view('sites.yayasan.kepengurusan.profile');
     });
 
 });

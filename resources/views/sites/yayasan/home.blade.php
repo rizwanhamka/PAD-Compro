@@ -9,19 +9,19 @@
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
         body { font-family: 'Manrope', sans-serif; }
     </style>
-    <title>Yayasan Matho’lil Huda</title>
+    <title>Yayasan Matho’liul Huda</title>
 
 </head>
 <body>
     <x-navbar />
 
-    <div class="flex justify-center items-center min-h-screen bg-gray-50">
+    <div class="flex justify-center items-center min-h-screen bg-gray-50 b">
         <div class="w-4/5 flex flex-col items-center">
             <!-- Bagian Judul -->
             {{-- GANTI PT PAS UDAH ADA GAMBAR BG --}}
             <div class="mb-12 px-10 py-40">
                 <h1 class="text-3xl font-bold mb-6">
-                    Matho’lil Huda
+                    Matho’liul Huda
                 </h1>
                 <p class="text-gray-700 leading-relaxed text-justify">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quisquam sunt aliquid aspernatur exercitationem fuga officiis aperiam nihil, quae eos sit deleniti, perspiciatis cupiditate et corporis iure itaque deserunt non! Necessitatibus reiciendis repudiandae assumenda dolore earum perferendis maxime eos eius laudantium repellendus beatae magni nam, sed sint deleniti dolorem rem praesentium sit excepturi magnam nihil quos. Veniam veritatis maxime minima corrupti quia dicta labore doloribus dolor nisi, soluta consequatur dignissimos nostrum, voluptatibus facere recusandae nemo neque aspernatur ab eius possimus quisquam quae sapiente aliquam nesciunt. Nobis corrupti perspiciatis dolor eveniet, iste saepe hic voluptates quaerat reprehenderit aspernatur, rerum ex a voluptate! Explicabo eum dicta necessitatibus aspernatur id autem soluta ad adipisci sequi iure recusandae, vero laudantium molestiae nulla, quae quis, obcaecati culpa non facere deleniti neque. Facilis libero temporibus eius quaerat sint eaque, commodi sunt natus debitis quia a ad error nihil architecto cupiditate alias, veniam iure nemo. Facere deleniti velit sunt cum, quo recusandae omnis nostrum iusto, repellat ut maiores eligendi repudiandae eos magni. Eaque ipsa recusandae esse vero corporis perspiciatis. Eius, impedit similique! Culpa, eos adipisci a aliquam itaque doloribus porro consequuntur, corporis magnam quae unde beatae saepe quas! Odio aliquam dolorum iusto sunt aperiam esse odit id.
@@ -139,7 +139,6 @@
 
         </div>
     </div>
-
-
 </body>
+<x-footer />
 </html>
