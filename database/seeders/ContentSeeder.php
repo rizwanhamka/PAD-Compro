@@ -17,10 +17,10 @@ class ContentSeeder extends Seeder
 
         for ($i = 0; $i < $jumlah; $i++) {
             DB::table('contents')->insert([
-                'site_id' => 1,
+                'site_id' => 2,
                 'title' => fake()->sentence(),
-                'body' => fake()->paragraphs(3, true), // 3 paragraf, jadi string
-                'image' => 'default.jpg', // bisa diganti generate nama image random juga
+                'body' => fake()->paragraphs(3, true),
+                'image' => 'default.jpg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
