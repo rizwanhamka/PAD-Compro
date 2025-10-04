@@ -13,7 +13,11 @@ Route::prefix('yayasan')->group(function () {
     // Route articles
     Route::get('article/{id}', function ($id) {
     $article = Content::findOrFail($id);
-    return view('sites.yayasan.articles.show', compact('article'));
+    $otherArticles = Content::where('id', '!=', $id)
+                        ->latest()
+                        ->take(3)
+                        ->get();
+    return view('sites.yayasan.articles.show', compact('article','otherArticles'));
     });
 
     Route::get('articles',[YayasanArticleController::class,'index'])->name('YayasanArticle.index');

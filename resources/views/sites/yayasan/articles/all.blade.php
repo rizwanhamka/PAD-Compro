@@ -18,29 +18,33 @@
             <div class="mb-12 px-10">
                 <section class="mx-auto py-12">
                     <!-- Title -->
-                    {{-- <h2 class="inline-block bg-green-800 text-white text-lg font-semibold px-6 py-3 rounded-full mb-8 shadow-md">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center relative inline-block">
                         Berita Terkini
-                    </h2> --}}
+                        <span class="block w-full h-1 bg-green-600 mt-2 mx-auto rounded-full"></span>
+                    </h2>
+
 
                     <!-- Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                         <!-- Card 1 -->
                         @foreach ($berita_all as $berita )
-                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1">
                                 <img src="{{ asset('images/artikel.png') }}" alt="Program 1" class="w-full h-48 object-cover">
                                 <div class="p-4 flex flex-col flex-grow">
-                                    <h3 class="text-lg font-bold mb-2">{{ $berita->title }}</h3>
+                                    <h3 class="text-lg font-bold mb-1">{{ $berita->title }}</h3>
+                                    <p class="text-gray-400 text-xs mb-2">{{ $berita->created_at->format('d M Y') }}</p>
                                     <p class="text-gray-600 text-sm mb-4 text-justify">
                                         {{ Str::words(strip_tags($berita->body), 30, '...') }}
                                     </p>
                                     <a href="{{ url('yayasan/article/'.$berita->id) }}"
-                                    class="mt-auto bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow self-start">
-                                        Baca Selengkawhpnya &raquo;
+                                    class="mt-auto bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow self-start transition duration-300">
+                                    Baca Selengkapnya &raquo;
                                     </a>
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                 </section>
             </div>

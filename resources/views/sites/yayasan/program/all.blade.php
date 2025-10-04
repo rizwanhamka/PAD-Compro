@@ -18,17 +18,13 @@
             <div class="mb-12 px-10">
                 <section class="mx-auto py-12">
                     <!-- Title -->
-                    {{-- <h2 class="inline-block bg-green-800 text-white text-lg font-semibold px-6 py-3 rounded-full mb-8 shadow-md">
-                        Berita Terkini
-                    </h2> --}}
+                    <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center relative inline-block">
+                        Program Yayasan
+                        <span class="block w-full h-1 bg-green-600 mt-2 mx-auto rounded-full"></span>
+                    </h2>
 
                     <!-- Cards -->
-                    <h2 class="inline-block bg-green-800 text-white text-lg font-semibold px-6 py-3 rounded-full mb-8 shadow-md">
-                            Program Terbaru
-                        </h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-
-
                         <!-- Card 1 -->
                         @for ($i = 1; $i <= 20; $i++)
                         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">

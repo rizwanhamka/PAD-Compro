@@ -2,7 +2,10 @@
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
 
         <!-- Logo -->
-        <div>
+        <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 flex-shrink-0">
+                <img src="{{ asset('images/logo2.png') }}" alt="Logo Yayasan" class="w-full h-full object-contain">
+            </div>
             <a href="/" class="text-white text-2xl font-bold tracking-wider">
                 YAYASAN <span class="font-normal">Matho'liul Huda</span>
             </a>
