@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('site_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('link');
             $table->string('image')->nullable();
             $table->timestamps();
         });

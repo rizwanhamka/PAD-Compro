@@ -18,9 +18,15 @@
         <div class="w-11/12 md:w-4/5 lg:w-3/5 mx-auto py-12">
             <!-- Gambar Header Artikel -->
             <div class="mb-8 rounded-2xl shadow-lg overflow-hidden">
-                <img src="{{ asset('images/artikel.png') }}"
-                    alt="Thumbnail Artikel"
-                    class="w-full max-h-[500px] object-cover">
+                @if ($article->image)
+                    <img src="{{ asset('storage/' . $article->image) }}"
+                            alt="{{ $article->title }}"
+                            class="w-full h-48 object-cover">
+                @else
+                    <img src="{{ asset('images/artikel.png') }}"
+                            alt="Gambar default"
+                            class="w-full h-48 object-cover">
+                @endif
             </div>
 
             <!-- Judul Artikel -->

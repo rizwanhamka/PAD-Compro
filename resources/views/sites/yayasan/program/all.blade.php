@@ -26,20 +26,23 @@
                     <!-- Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                         <!-- Card 1 -->
-                        @for ($i = 1; $i <= 20; $i++)
-                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                            <img src="{{ asset('images/berita.png') }}" alt="Program 1" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-bold mb-2">Lorem, ipsum dolor.</h3>
-                                <p class="text-gray-600 text-sm mb-4 text-justify">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit porro repudiandae suscipit possimus repellendus deleniti minus ipsum odit delectus laborum nam quidem ullam dolorum nobis, incidunt laboriosam inventore .
-                                </p>
-                                <a href='/article/id' class="bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow">
-                                    Baca Selengkapnya &raquo;
-                                </a>
+                        @foreach ($program_all as $program)
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                                <img src="{{ asset('storage/' . $program->image) }}"
+                                    alt="{{ $program->name }}"
+                                    class="w-full h-48 object-cover">
+                                <div class="p-4">
+                                    <h3 class="text-lg font-bold mb-2">{{ $program->name }}</h3>
+                                    <p class="text-gray-600 text-sm mb-4 text-justify">
+                                        {{ Str::limit($program->description, 200, '...') }}
+                                    </p>
+                                    <a href="{{ url('yayasan/program/' . $program->id) }}"
+                                    class="bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow">
+                                        Baca Selengkapnya &raquo;
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </section>
             </div>

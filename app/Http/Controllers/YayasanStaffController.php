@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
-class YayasanArticleController extends Controller
+class YayasanStaffController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $berita_all = Content::latest()->get();
-        return view("sites.yayasan.articles.all", compact("berita_all"));
+        $staffs = Staff::where('site_id', 1)->get();
+        return view('sites.yayasan.kepengurusan.staff', compact('staffs'));
     }
 
     /**

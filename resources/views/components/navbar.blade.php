@@ -34,9 +34,9 @@
                 <ul
                     class="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                     <li>
-                        <a href="/yayasan/profile"
+                        <a href="/yayasan/staff"
                             class="block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 transition">
-                            Profil Organisasi
+                            Staff Organisasi
                         </a>
                     </li>
                     <li>

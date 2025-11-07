@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
+use App\Models\Program;
 use Illuminate\Http\Request;
 
-class YayasanArticleController extends Controller
+class YayasanProgramController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $berita_all = Content::latest()->get();
-        return view("sites.yayasan.articles.all", compact("berita_all"));
+        $program_all = Program::latest()->get();
+        return view("sites.yayasan.program.all", compact("program_all"));
+
     }
 
     /**

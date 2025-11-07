@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Gallery;
+use Illuminate\Support\Facades\Storage;
+
+class GalleryController extends Controller
+{
+    // Halaman galeri publik
+    public function index()
+    {
+        $galleries = Gallery::latest()->get();
+        return view('sites.yayasan.gallery.index', compact('galleries'));
+    }
+
+    // ✅ Halaman dashboard admin untuk galeri
+    public function dashboard()
+    {
+        $galleries = Gallery::latest()->get();
+        return view('admin.galeri', compact('galleries'));
+    }
+
+    // ✅ Upload gambar galeri
+    public function store(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'title' => 'nullable|string|max:255',
+        ]);
+
+        $path = $request->file('image')->store('gallery', 'public');
+
+        Gallery::create([
+            'title' => $request->title,
+            'image' => $path,
+        ]);
+
+        return back()->with('success', 'Gambar berhasil diupload!');
+    }
+
+    // ✅ Hapus gambar galeri
+    public function destroy(Gallery $gallery)
+    {
+        if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
+            Storage::disk('public')->delete($gallery->image);
+        }
+
+        $gallery->delete();
+
+        return back()->with('success', 'Gambar berhasil dihapus!');
+    }
+}

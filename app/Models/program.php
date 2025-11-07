@@ -9,7 +9,8 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['site_id', 'name', 'description', 'image'];
+    protected $fillable = ['site_id', 'name', 'description', 'link', 'image'];
+
 
     public function site()
     {

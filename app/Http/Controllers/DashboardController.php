@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
 use Illuminate\Http\Request;
 
-class YayasanArticleController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $berita_all = Content::latest()->get();
-        return view("sites.yayasan.articles.all", compact("berita_all"));
+        return view("sites.admin.login");
     }
 
     /**
