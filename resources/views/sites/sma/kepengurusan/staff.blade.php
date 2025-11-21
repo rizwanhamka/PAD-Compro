@@ -17,7 +17,7 @@
 <body class="bg-gray-50 min-h-screen">
     <div class="flex justify-center items-center py-20">
         <div class="w-4/5 flex flex-col items-center">
-            <h1 class="text-3xl font-bold text-green-700 mb-10">Struktur Kepengurusan Yayasan</h1>
+            <h1 class="text-3xl font-bold text-purple-700 mb-10">Struktur Kepengurusan Yayasan</h1>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
                 @forelse ($staffs as $staff)

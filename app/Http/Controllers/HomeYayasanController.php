@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\Program;
 use Illuminate\Http\Request;
 
 class HomeYayasanController extends Controller
@@ -15,7 +16,10 @@ class HomeYayasanController extends Controller
         $berita_3 = Content::orderBy("created_at", "desc")
             ->take(3)
             ->get();
-        return view("sites.yayasan.home", compact("berita_3"));
+        $program_3 = Program::orderBy("created_at", "desc")
+            ->take(3)
+            ->get();
+        return view("sites.yayasan.home", compact("berita_3","program_3"));
     }
 
     /**

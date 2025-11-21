@@ -83,47 +83,21 @@
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <img src="{{ asset('images/berita.png') }}" alt="Program 1" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-bold mb-2">Pendaftaran lorem dibuka</h3>
-                            <p class="text-gray-600 text-sm mb-4">
-                                Telah dibukanya pendaftaran Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non sapien sit amet nunc sollicitudin.
-                            </p>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-black font-semibold px-6 py-2 rounded-lg shadow">
-                                Daftar
-                            </button>
+                    @foreach ($program_3 as $berita )
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+                            <img src="{{ asset('storage/' . $berita->image) }}" alt="Program 1" class="w-full h-48 object-cover">
+                            <div class="p-4 flex flex-col flex-grow">
+                                <h3 class="text-lg font-bold mb-2">{{ $berita->name }}</h3>
+                                <p class="text-gray-600 text-sm mb-4 text-justify">
+                                    {{ Str::words(strip_tags($berita->description), 30, '...') }}
+                                </p>
+                                <a href="{{ url('yayasan/article/'.$berita->id) }}"
+                                   class="mt-auto bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow self-start">
+                                    Baca Selengkapnya &raquo;
+                                </a>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <img src="{{ asset('images/berita.png') }}" alt="Program 2" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-bold mb-2">Pendaftaran ipsum dibuka</h3>
-                            <p class="text-gray-600 text-sm mb-4">
-                                Telah dibukanya pendaftaran Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non sapien sit amet nunc sollicitudin.
-                            </p>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-black font-semibold px-6 py-2 rounded-lg shadow">
-                                Daftar
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                        <img src="{{ asset('images/berita.png') }}" alt="Program 3" class="w-full h-48 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-bold mb-2">Pendaftaran dolor sit dibuka</h3>
-                            <p class="text-gray-600 text-sm mb-4">
-                                Telah dibukanya pendaftaran Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse non sapien sit amet nunc sollicitudin.
-                            </p>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-black font-semibold px-6 py-2 rounded-lg shadow">
-                                Daftar
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </section>
 
@@ -136,7 +110,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach ($berita_3 as $berita )
                         <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
-                            <img src="{{ asset('images/artikel.png') }}" alt="Program 1" class="w-full h-48 object-cover">
+                            <img src="{{ asset('storage/' . $berita->image) }}" alt="Program 1" class="w-full h-48 object-cover">
                             <div class="p-4 flex flex-col flex-grow">
                                 <h3 class="text-lg font-bold mb-2">{{ $berita->title }}</h3>
                                 <p class="text-gray-600 text-sm mb-4 text-justify">

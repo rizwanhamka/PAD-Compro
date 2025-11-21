@@ -21,7 +21,7 @@
                     <!-- Title -->
                     <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center relative inline-block">
                         Berita Terkini
-                        <span class="block w-full h-1 bg-green-600 mt-2 mx-auto rounded-full"></span>
+                        <span class="block w-full h-1 bg-purple-600 mt-2 mx-auto rounded-full"></span>
                     </h2>
 
                     <!-- Cards -->

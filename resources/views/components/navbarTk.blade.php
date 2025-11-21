@@ -17,7 +17,7 @@
         <ul class="flex items-center space-x-8 h-full">
             <li>
                 <a href="/tk"
-                    class="flex items-center h-full pb-1 text-white hover:text-gray-300 transition-colors duration-300 {{ request()->is('/') ? 'border-b-2 border-white' : '' }}">
+                    class="flex items-center h-full pb-1 text-white hover:text-gray-300 transition-colors duration-300 {{ request()->is('tk') ? 'border-b-2 border-white' : '' }}">
                     Home
                 </a>
             </li>
