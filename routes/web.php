@@ -5,11 +5,30 @@ use App\Models\Program;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SdHomeController;
+use App\Http\Controllers\TkHomeController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SdStaffController;
+use App\Http\Controllers\SmaHomeController;
+use App\Http\Controllers\SmpHomeController;
+use App\Http\Controllers\TkStaffController;
+use App\Http\Controllers\SmaStaffController;
+use App\Http\Controllers\SmpStaffController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SdArticleController;
+use App\Http\Controllers\SdGalleryController;
+use App\Http\Controllers\SdProgramController;
 use App\Http\Controllers\TkArticleController;
+use App\Http\Controllers\TkGalleryController;
+use App\Http\Controllers\TkProgramController;
+use App\Http\Controllers\SmaArticleController;
+use App\Http\Controllers\SmaGalleryController;
+use App\Http\Controllers\SmaProgramController;
+use App\Http\Controllers\SmpArticleController;
+use App\Http\Controllers\SmpGalleryController;
+use App\Http\Controllers\SmpProgramController;
 use App\Http\Controllers\HomeYayasanController;
 use App\Http\Controllers\YayasanStaffController;
 use App\Http\Controllers\YayasanArticleController;
@@ -106,7 +125,16 @@ Route::post('galeri', [GalleryController::class, 'store'])->name('gallery.store'
 |--------------------------------------------------------------------------
 */
 
+/*
+|--------------------------------------------------------------------------
+| TK Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::prefix('tk')->group(function () {
+
+    // Home
+    Route::get('/', [TkHomeController::class, 'index'])->name('tk.home');
 
     // Artikel
     Route::get('articles', [TkArticleController::class, 'index'])->name('tk.articles.index');
@@ -117,11 +145,108 @@ Route::prefix('tk')->group(function () {
     })->name('tk.articles.show');
 
     // Program
-    Route::get('programs', fn() => view('sites.tk.program.all'))->name('tk.programs');
+    Route::get('programs', [TkProgramController::class, 'index'])->name('tk.programs.index');
+    Route::get('program/{id}', function ($id) {
+    $program = Program::where('site_id', 2)->findOrFail($id);
+
+    $otherPrograms = Program::where('site_id', 2)
+        ->where('id', '!=', $id)
+        ->latest()
+        ->take(3)
+        ->get();
+
+        return view('sites.tk.program.show', compact('program', 'otherPrograms'));
+    })->name('tk.programs.show');
+
+    // Staff
+    Route::get('staff', [TkStaffController::class, 'index'])->name('tk.staff.index');
 
     // Galeri
-    Route::get('galeri', fn() => view('sites.tk.gallery.index'))->name('tk.gallery');
+    Route::get('galeri', [TkGalleryController::class, 'index'])->name('tk.gallery.index');
+});
 
-    // Profil
-    Route::get('profile', fn() => view('sites.tk.kepengurusan.profile'))->name('tk.profile');
+Route::prefix('sd')->group(function () {
+
+    // Home
+    Route::get('/', [SdHomeController::class, 'index'])->name('sd.home');
+
+    // Artikel
+    Route::get('articles', [SdArticleController::class, 'index'])->name('sd.articles.index');
+    Route::get('article/{id}', function ($id) {
+        $article = Content::findOrFail($id);
+        $otherArticles = Content::where('id', '!=', $id)->latest()->take(3)->get();
+        return view('sites.sd.articles.show', compact('article', 'otherArticles'));
+    })->name('sd.articles.show');
+
+    // Program
+    Route::get('programs', [SdProgramController::class, 'index'])->name('sd.programs.index');
+    Route::get('program/{id}', function ($id) {
+        $program = Program::findOrFail($id);
+        $otherPrograms = Program::where('id', '!=', $id)->latest()->take(3)->get();
+        return view('sites.sd.program.show', compact('program', 'otherPrograms'));
+    })->name('sd.programs.show');
+
+    // Staff
+    Route::get('staff', [SdStaffController::class, 'index'])->name('sd.staff.index');
+
+    // Galeri
+    Route::get('galeri', [SdGalleryController::class, 'index'])->name('sd.gallery.index');
+});
+
+
+
+Route::prefix('smp')->group(function () {
+
+    // Home
+    Route::get('/', [SmpHomeController::class, 'index'])->name('smp.home');
+
+    // Artikel
+    Route::get('articles', [SmpArticleController::class, 'index'])->name('smp.articles.index');
+    Route::get('article/{id}', function ($id) {
+        $article = Content::findOrFail($id);
+        $otherArticles = Content::where('id', '!=', $id)->latest()->take(3)->get();
+        return view('sites.smp.articles.show', compact('article', 'otherArticles'));
+    })->name('smp.articles.show');
+
+    // Program
+    Route::get('programs', [SmpProgramController::class, 'index'])->name('smp.programs.index');
+    Route::get('program/{id}', function ($id) {
+        $program = Program::findOrFail($id);
+        $otherPrograms = Program::where('id', '!=', $id)->latest()->take(3)->get();
+        return view('sites.smp.program.show', compact('program', 'otherPrograms'));
+    })->name('smp.programs.show');
+
+    // Staff
+    Route::get('staff', [SmpStaffController::class, 'index'])->name('smp.staff.index');
+
+    // Galeri
+    Route::get('galeri', [SmpGalleryController::class, 'index'])->name('smp.gallery.index');
+});
+
+Route::prefix('sma')->group(function () {
+
+    // Home
+    Route::get('/', [SmaHomeController::class, 'index'])->name('sma.home');
+
+    // Artikel
+    Route::get('articles', [SmaArticleController::class, 'index'])->name('sma.articles.index');
+    Route::get('article/{id}', function ($id) {
+        $article = Content::findOrFail($id);
+        $otherArticles = Content::where('id', '!=', $id)->latest()->take(3)->get();
+        return view('sites.sma.articles.show', compact('article', 'otherArticles'));
+    })->name('sma.articles.show');
+
+    // Program
+    Route::get('programs', [SmaProgramController::class, 'index'])->name('sma.programs.index');
+    Route::get('program/{id}', function ($id) {
+        $program = Program::findOrFail($id);
+        $otherPrograms = Program::where('id', '!=', $id)->latest()->take(3)->get();
+        return view('sites.sma.program.show', compact('program', 'otherPrograms'));
+    })->name('sma.programs.show');
+
+    // Staff
+    Route::get('staff', [SmaStaffController::class, 'index'])->name('sma.staff.index');
+
+    // Galeri
+    Route::get('galeri', [SmaGalleryController::class, 'index'])->name('sma.gallery.index');
 });

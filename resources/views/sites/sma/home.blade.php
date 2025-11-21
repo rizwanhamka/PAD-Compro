@@ -12,11 +12,11 @@
             text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
         }
     </style>
-    <title>Tk Matho’liul Huda</title>
+    <title>Sma Matho’liul Huda</title>
 </head>
 <body class="font-manrope">
 
-    <x-navbarTk />
+    <x-navbarSma />
 
     <!-- Carousel coek -->
     <div class="relative w-full h-screen overflow-hidden">

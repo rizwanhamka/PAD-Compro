@@ -13,7 +13,9 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        $programs = Program::latest()->get();
+        $programs = Program::where('site_id', 1)
+        ->latest()
+        ->get();
         return view('admin.program', compact('programs'));
     }
 

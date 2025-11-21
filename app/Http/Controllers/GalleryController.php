@@ -11,7 +11,9 @@ class GalleryController extends Controller
     // Halaman galeri publik
     public function index()
     {
-        $galleries = Gallery::latest()->get();
+        $galleries = Gallery::where('site_id', 1)
+        ->latest()
+        ->get();
         return view('sites.yayasan.gallery.index', compact('galleries'));
     }
 

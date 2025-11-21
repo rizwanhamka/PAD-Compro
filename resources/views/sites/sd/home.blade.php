@@ -16,7 +16,7 @@
 </head>
 <body class="font-manrope">
 
-    <x-navbarTk />
+    <x-navbarSd />
 
     <!-- Carousel coek -->
     <div class="relative w-full h-screen overflow-hidden">

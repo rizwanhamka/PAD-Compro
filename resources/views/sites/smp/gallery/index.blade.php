@@ -11,7 +11,7 @@
     <title>Galeri Yayasan</title>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50">
-    <x-navbarTk />
+    <x-navbarSmp />
 
     <main class="flex-grow flex justify-center py-16">
         <div class="w-4/5 flex flex-col items-center">
@@ -20,7 +20,7 @@
                     <!-- Title -->
                     <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center relative inline-block">
                         Galeri Yayasan
-                        <span class="block w-full h-1 bg-red-600 mt-2 mx-auto rounded-full"></span>
+                        <span class="block w-full h-1 bg-green-600 mt-2 mx-auto rounded-full"></span>
                     </h2>
 
                     <!-- Cards -->
