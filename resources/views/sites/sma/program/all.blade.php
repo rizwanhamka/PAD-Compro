@@ -36,7 +36,7 @@
                                     <p class="text-gray-600 text-sm mb-4 text-justify">
                                         {{ Str::limit($program->description, 200, '...') }}
                                     </p>
-                                    <a href="{{ url('tk/program/' . $program->id) }}"
+                                    <a href="{{ url('sma/program/' . $program->id) }}"
                                     class="bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow">
                                         Baca Selengkapnya &raquo;
                                     </a>

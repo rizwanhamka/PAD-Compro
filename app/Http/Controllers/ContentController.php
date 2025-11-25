@@ -8,59 +8,94 @@ use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
 {
-    public function index()
-    {
-        $contents = Content::where('site_id', 1)->latest()->get();
-        return view('admin.berita', compact('contents'));
-    }
+    /**
+     * LIST BERITA PER SITE
+     */
+public function index($site)
+{
+    $site_id = (int) ($site);
 
-    public function store(Request $request)
+    $contents = Content::where('site_id', $site_id)->latest()->get();
+    return view('admin.berita', compact('contents', 'site'));
+}
+
+
+
+    /**
+     * STORE BERITA PER SITE
+     */
+    public function store(Request $request, $site)
     {
+        $site_id = (int)($site);
+
         $data = $request->validate([
-            'site_id' => 'required|integer',
             'title' => 'required|string|max:255',
-            'body' => 'required|string',
+            'body'  => 'required|string',
             'image' => 'nullable|image|max:2048',
         ]);
 
+        $data['site_id'] = $site_id;
+
         if ($request->hasFile('image')) {
-            // simpan ke storage/app/public/contents
-            $path = $request->file('image')->store('contents', 'public');
-            $data['image'] = $path;
+            $data['image'] = $request->file('image')->store('contents', 'public');
         }
 
         Content::create($data);
 
-        return redirect()->back()->with('success', 'Berita berhasil ditambahkan!');
+        return back()->with('success', 'Berita berhasil ditambahkan!');
     }
 
-    public function update(Request $request, Content $content)
-{
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'body' => 'required|string',
-        'image' => 'nullable|image|max:2048',
-    ]);
 
-    $data = $request->only(['title', 'body']);
-
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('berita', 'public');
-        $data['image'] = $path;
-    }
-
-    $content->update($data);
-
-    return redirect()->back()->with('success', 'Berita berhasil diperbarui!');
-}
-
-    public function destroy(Content $content)
+    /**
+     * UPDATE BERITA PER SITE
+     */
+    public function update(Request $request, $site, Content $content)
     {
+        $site_id = (int)($site);
+
+        // CEK: berita harus milik site yang benar → keamanan
+        if ($content->site_id != $site_id) {
+            abort(403, 'Akses tidak diizinkan.');
+        }
+
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'body'  => 'required|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        // handle update image
+        if ($request->hasFile('image')) {
+            if ($content->image) {
+                Storage::disk('public')->delete($content->image);
+            }
+            $data['image'] = $request->file('image')->store('contents', 'public');
+        }
+
+        $content->update($data);
+
+        return back()->with('success', 'Berita berhasil diperbarui!');
+    }
+
+
+    /**
+     * DELETE BERITA PER SITE
+     */
+    public function destroy($site, Content $content)
+    {
+        $site_id = (int)($site);
+
+        // CEK: berita harus milik site yang sedang diakses
+        if ($content->site_id != $site_id) {
+            abort(403, 'Akses tidak diizinkan.');
+        }
+
         if ($content->image) {
             Storage::disk('public')->delete($content->image);
         }
 
         $content->delete();
-        return redirect()->back()->with('success', 'Berita berhasil dihapus.');
+
+        return back()->with('success', 'Berita berhasil dihapus!');
     }
 }

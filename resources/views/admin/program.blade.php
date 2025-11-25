@@ -86,9 +86,14 @@
                                 @endif
                             </td>
                             <td class="p-4 space-x-2">
-                                <button onclick="editProgram({{ $program->id }}, '{{ addslashes($program->title) }}', `{{ addslashes($program->body) }}`, '{{ $program->link }}')"
+                                <button onclick="editProgram(
+                                    {{ $program->id }},
+                                    '{{ addslashes($program->name) }}',
+                                    `{{ addslashes($program->description) }}`,
+                                    '{{ $program->link }}'
+                                )"
                                         class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
-                                <form action="{{ route('programs.destroy', $program->id) }}" method="POST" class="inline delete-form">
+                                <form action="{{ route('dashboard.program.destroy', ['site' => $site, 'program' => $program->id]) }}"method="POST" class="inline delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" onclick="confirmDelete(this)" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
@@ -114,7 +119,7 @@
 
             <h2 class="text-xl font-bold mb-4" id="form-title">Tambah Program</h2>
 
-            <form id="programForm" action="{{ route('programs.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form id="programForm" action="{{ route('dashboard.program.store', ['site' => $site]) }}"  method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <input type="hidden" name="id" id="program_id">
 
@@ -160,7 +165,7 @@
             modal.classList.add('active');
             form.reset();
             titleEl.innerText = "Tambah Program";
-            form.action = "{{ route('programs.store') }}";
+            form.action = "{{ route('dashboard.program.store', ['site' => $site]) }}";
             form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
         }
 
@@ -175,7 +180,9 @@
             document.getElementById('title').value = title;
             document.getElementById('body').value = body;
             document.getElementById('link').value = link || '';
-            form.action = `/programs/${id}`;
+            form.action = `/dashboard/{{ $site }}/program/${id}`;
+            form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
+            form.insertAdjacentHTML('beforeend', '<input type="hidden" name="_method" value="PUT">');
             form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
             form.insertAdjacentHTML('beforeend', '@method("PUT")');
         }

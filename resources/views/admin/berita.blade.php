@@ -39,7 +39,8 @@
         <div class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Manajemen Berita</h1>
-                <p class="text-sm text-gray-500">Yayasan Matho’liul Huda (Site ID: 1)</p>
+                <p class="text-sm text-gray-500">Site: {{ $site }}</p>
+
             </div>
 
             <div class="flex items-center space-x-3">
@@ -80,7 +81,7 @@
                             <td class="p-4 space-x-2">
                                 <button onclick="editBerita({{ $content->id }}, '{{ addslashes($content->title) }}', '{{ addslashes($content->body) }}')"
                                         class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
-                                <form action="{{ route('contents.destroy', $content->id) }}" method="POST" class="inline delete-form">
+                                <form action="{{ route('dashboard.berita.destroy', ['site' => $site, 'content' => $content->id]) }}" method="POST" class="inline delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" onclick="confirmDelete(this)" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
@@ -106,10 +107,10 @@
 
             <h2 class="text-xl font-bold mb-4" id="form-title">Tambah Berita</h2>
 
-            <form id="beritaForm" action="{{ route('contents.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form id="beritaForm" action="{{ route('dashboard.berita.store', ['site' => $site]) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <input type="hidden" name="id" id="berita_id">
-                <input type="hidden" name="site_id" value="1">
+                <input type="hidden" name="site_id" value="{{ $site }}">
 
                 <div>
                     <label class="block text-sm text-gray-600 mb-1">Judul</label>
@@ -147,7 +148,7 @@
             modal.classList.add('active');
             form.reset();
             titleEl.innerText = "Tambah Berita";
-            form.action = "{{ route('contents.store') }}";
+            form.action = "{{ route('dashboard.berita.store', ['site' => $site]) }}";
             form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
         }
 
@@ -161,9 +162,10 @@
             document.getElementById('berita_id').value = id;
             document.getElementById('title').value = title;
             document.getElementById('body').value = body;
-            form.action = `/contents/${id}`;
+            form.action = "{{ route('dashboard.berita.update', ['site' => $site, 'content' => 'CONTENT_ID']) }}"
+    .replace('CONTENT_ID', id);
             form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
-            form.insertAdjacentHTML('beforeend', '@method("PUT")');
+            form.insertAdjacentHTML('beforeend', '<input type="hidden" name="_method" value="PUT">');
         }
 
         function confirmDelete(button) {

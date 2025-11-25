@@ -11,7 +11,7 @@
     <title>{{ $program->name }}</title>
 </head>
 <body>
-    <x-navbar />
+    <x-navbarSmp />
     <div class="flex justify-center items-center min-h-screen bg-gray-50">
         <!-- Wrapper Program -->
         <div class="w-11/12 md:w-4/5 lg:w-3/5 mx-auto py-12">
@@ -49,7 +49,7 @@
             @if ($program->link)
                 <div class="text-center mt-16">
                     <a href="{{ $program->link }}" target="_blank"
-                       class="inline-block bg-[#0d542b] hover:bg-green-800 text-white text-lg font-semibold px-10 py-4 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+                       class="inline-block bg-blue-800 hover:bg-blue-800 text-white text-lg font-semibold px-10 py-4 rounded-xl shadow-lg transition duration-300 transform hover:-translate-y-1 hover:shadow-xl">
                         🔗 Kunjungi Formulir Pendaftaran
                     </a>
                 </div>

@@ -36,7 +36,7 @@
         @endif
 
         {{-- Form Upload --}}
-        <form action="{{ route('dashboard.galeri.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-xl shadow-md mb-10">
+        <form action="{{ route('dashboard.galeri.store', ['site' => $site]) }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-xl shadow-md mb-10">
             @csrf
             <div class="flex flex-col sm:flex-row sm:items-end gap-4">
                 <div class="flex-1">
@@ -58,7 +58,7 @@
                     <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title ?? 'Gambar Galeri' }}" class="w-full h-48 object-cover">
                     <div class="p-4 flex justify-between items-center">
                         <p class="text-sm text-gray-700 truncate">{{ $gallery->title ?? '-' }}</p>
-                        <form action="{{ route('dashboard.galeri.destroy', $gallery->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus gambar ini?')">
+                        <form action="{{ route('dashboard.galeri.destroy', ['site' => $site, 'gallery' => $gallery->id]) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus gambar ini?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-semibold">Hapus</button>

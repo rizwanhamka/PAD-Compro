@@ -36,7 +36,7 @@
         {{-- Pilihan Manajemen --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
             {{-- Manajemen Berita --}}
-            <a href="{{ route('dashboard.berita') }}"
+            <a href="{{ route('dashboard.berita.index', $site) }}"
                 class="bg-white shadow-md rounded-xl p-6 border border-gray-100 hover:shadow-lg transition group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-12 h-12 bg-green-100 text-green-700 flex items-center justify-center rounded-full text-xl font-bold">📰</div>
@@ -46,7 +46,7 @@
             </a>
 
             {{-- Manajemen Galeri --}}
-            <a href="{{ route('dashboard.galeri') }}"
+            <a href="{{ route('dashboard.galeri.index', $site) }}"
                 class="bg-white shadow-md rounded-xl p-6 border border-gray-100 hover:shadow-lg transition group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-12 h-12 bg-blue-100 text-blue-700 flex items-center justify-center rounded-full text-xl font-bold">🖼️</div>
@@ -55,7 +55,7 @@
                 <p class="text-sm text-gray-500">Kelola foto & dokumentasi kegiatan yayasan.</p>
             </a>
             {{-- Manajemen Program --}}
-            <a href="{{ route('dashboard.program') }}"
+            <a href="{{ route('dashboard.program.index', $site) }}"
                 class="bg-white shadow-md rounded-xl p-6 border border-gray-100 hover:shadow-lg transition group">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-12 h-12 bg-emerald-100 text-emerald-700 flex items-center justify-center rounded-full text-xl font-bold">📘</div>
@@ -65,7 +65,7 @@
             </a>
 
             {{-- Manajemen Staff--}}
-            <a href="{{ route('dashboard.staff') }}"
+            <a href="{{ route('dashboard.staff.index', $site) }}"
                 class="bg-white shadow-md rounded-xl p-6 border border-gray-100 hover:shadow-lg transition group">
                 <div class="flex items-center gap-4 mb-4">
                     <div

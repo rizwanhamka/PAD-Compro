@@ -18,15 +18,19 @@ class GalleryController extends Controller
     }
 
     // ✅ Halaman dashboard admin untuk galeri
-    public function dashboard()
+    public function dashboard($site)
     {
-        $galleries = Gallery::latest()->get();
-        return view('admin.galeri', compact('galleries'));
+        $site_id = (int)($site);
+
+        $galleries = Gallery::where('site_id', $site_id)->latest()->get();
+
+        return view('admin.galeri', compact('galleries', 'site'));
     }
 
     // ✅ Upload gambar galeri
-    public function store(Request $request)
+    public function store(Request $request, $site)
     {
+        $site_id = (int)($site);
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'nullable|string|max:255',
@@ -35,6 +39,7 @@ class GalleryController extends Controller
         $path = $request->file('image')->store('gallery', 'public');
 
         Gallery::create([
+            'site_id' => $site_id,
             'title' => $request->title,
             'image' => $path,
         ]);
@@ -43,7 +48,7 @@ class GalleryController extends Controller
     }
 
     // ✅ Hapus gambar galeri
-    public function destroy(Gallery $gallery)
+    public function destroy($site, Gallery $gallery)
     {
         if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
             Storage::disk('public')->delete($gallery->image);
@@ -53,4 +58,5 @@ class GalleryController extends Controller
 
         return back()->with('success', 'Gambar berhasil dihapus!');
     }
+
 }

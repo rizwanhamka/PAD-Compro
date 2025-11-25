@@ -87,11 +87,13 @@
                             <td class="p-4 space-x-2">
                                 <button onclick="editStaff({{ $staff->id }}, '{{ addslashes($staff->name) }}', '{{ $staff->nip }}', '{{ $staff->role }}', '{{ $staff->email }}', '{{ $staff->instagram }}', '{{ $staff->facebook }}', '{{ $staff->linkedin }}', '{{ $staff->blog }}')"
                                     class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
-                                <form action="{{ route('staffs.destroy', $staff->id) }}" method="POST" class="inline delete-form">
+                                <form action="{{ route('dashboard.staff.destroy', ['site' => $site, 'staff' => $staff->id]) }}"
+                                    method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="button" onclick="confirmDelete(this)" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
+                                    <button class="text-red-600">Hapus</button>
                                 </form>
+
                             </td>
                         </tr>
                     @empty
@@ -108,7 +110,8 @@
             <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">✕</button>
             <h2 class="text-xl font-bold mb-4" id="form-title">Tambah Staff</h2>
 
-            <form id="staffForm" action="{{ route('staffs.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form id="staffForm" action="{{ route('dashboard.staff.store', ['site' => $site]) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+
                 @csrf
                 <input type="hidden" name="id" id="staff_id">
 
@@ -169,7 +172,7 @@
             modal.classList.add('active');
             form.reset();
             titleEl.innerText = "Tambah Staff";
-            form.action = "{{ route('staffs.store') }}";
+            form.action = `/dashboard/${site}/staff`;
             form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
         }
 
@@ -189,7 +192,7 @@
             document.getElementById('facebook').value = fb || '';
             document.getElementById('linkedin').value = ln || '';
             document.getElementById('blog').value = blog || '';
-            form.action = `/staffs/${id}`;
+            form.action = `/dashboard/${site}/staff/${id}`;
             form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
             form.insertAdjacentHTML('beforeend', '@method("PUT")');
         }

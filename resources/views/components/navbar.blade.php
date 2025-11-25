@@ -20,8 +20,15 @@
                 </a>
             </li>
 
+            <li>
+                <a href="/yayasan/staff"
+                    class="flex items-center h-full pb-1 text-white hover:text-gray-300 transition-colors duration-300 {{ request()->is('yayasan/staff') ? 'border-b-2 border-white' : '' }}">
+                    Kepengurusan
+                </a>
+            </li>
+
             <!-- Dropdown Kepengurusan -->
-            <li class="relative group">
+            {{-- <li class="relative group">
                 <a href="#"
                     class="flex items-center h-full pb-1 text-white hover:text-gray-300 transition-colors duration-300 {{ request()->is('kepengurusan*') ? 'border-b-2 border-white' : '' }}">
                     Kepengurusan
@@ -46,7 +53,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
 
             <li>
                 <a href="/yayasan/programs"

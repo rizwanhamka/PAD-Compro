@@ -48,7 +48,7 @@
                 <li>
                     <a href="{{ url('/') }}"
                     class="flex items-center gap-2
-                    {{ request()->is('/') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
+                    {{ (request()->is('/') || request()->is('yayasan*')) ? 'text-yellow-300 font-semibold' : 'text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
@@ -60,7 +60,7 @@
                 <li>
                     <a href="{{ url('/tk') }}"
                     class="flex items-center gap-2
-                    {{ request()->is('tk') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
+                    {{ request()->is('tk*') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
@@ -72,7 +72,7 @@
                 <li>
                     <a href="{{ url('/sd') }}"
                     class="flex items-center gap-2
-                    {{ request()->is('sd') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
+                    {{ request()->is('sd*') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
@@ -84,7 +84,7 @@
                 <li>
                     <a href="{{ url('/smp') }}"
                     class="flex items-center gap-2
-                    {{ request()->is('smp') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
+                    {{ request()->is('smp*') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>
@@ -96,7 +96,7 @@
                 <li>
                     <a href="{{ url('/sma') }}"
                     class="flex items-center gap-2
-                    {{ request()->is('sma') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
+                    {{ request()->is('sma*') ? 'text-yellow-300 font-semibold' : 'text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                         </svg>

@@ -10,10 +10,15 @@
 
     <!-- Menu Buttons -->
     <nav class="flex flex-col gap-4 w-full px-5">
-        <a href="/dashboard" class="block w-full bg-green-800 text-white font-semibold py-2.5 rounded-md text-center hover:bg-green-900 transition">Yayasan</a>
-        <a href="#" class="block w-full bg-red-800 text-white font-semibold py-2.5 rounded-md text-center hover:bg-red-900 transition">Tk</a>
-        <a href="#" class="block w-full bg-amber-500 text-white font-semibold py-2.5 rounded-md text-center hover:bg-amber-600 transition">SD</a>
-        <a href="#" class="block w-full bg-sky-600 text-white font-semibold py-2.5 rounded-md text-center hover:bg-sky-700 transition">SMP</a>
-        <a href="#" class="block w-full bg-indigo-900 text-white font-semibold py-2.5 rounded-md text-center hover:bg-indigo-950 transition">SMA</a>
+        <a href="{{ route('dashboard.index', 1) }}" class="block w-full bg-green-800 text-white font-semibold py-2.5 rounded-md text-center hover:bg-green-900 transition">Yayasan</a>
+
+        <a href="{{ route('dashboard.index', 2) }}" class="block w-full bg-red-800 text-white font-semibold py-2.5 rounded-md text-center hover:bg-red-900 transition">TK</a>
+
+        <a href="{{ route('dashboard.index', 3) }}" class="block w-full bg-amber-500 text-white font-semibold py-2.5 rounded-md text-center hover:bg-amber-600 transition">SD</a>
+
+        <a href="{{ route('dashboard.index', 4) }}" class="block w-full bg-sky-600 text-white font-semibold py-2.5 rounded-md text-center hover:bg-sky-700 transition">SMP</a>
+
+        <a href="{{ route('dashboard.index', 5) }}" class="block w-full bg-indigo-900 text-white font-semibold py-2.5 rounded-md text-center hover:bg-indigo-950 transition">SMA</a>
+
     </nav>
 </div>

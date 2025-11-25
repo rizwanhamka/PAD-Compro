@@ -91,7 +91,7 @@
                                 <p class="text-gray-600 text-sm mb-4 text-justify">
                                     {{ Str::words(strip_tags($berita->description), 30, '...') }}
                                 </p>
-                                <a href="{{ url('yayasan/article/'.$berita->id) }}"
+                                <a href="{{ url('sma/program/'.$berita->id) }}"
                                    class="mt-auto bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow self-start">
                                     Baca Selengkapnya &raquo;
                                 </a>
@@ -116,7 +116,7 @@
                                 <p class="text-gray-600 text-sm mb-4 text-justify">
                                     {{ Str::words(strip_tags($berita->body), 30, '...') }}
                                 </p>
-                                <a href="{{ url('tk/article/'.$berita->id) }}"
+                                <a href="{{ url('sma/article/'.$berita->id) }}"
                                    class="mt-auto bg-gray-200 hover:bg-gray-300 text-sm text-black font-semibold px-6 py-2 rounded-lg shadow self-start">
                                     Baca Selengkapnya &raquo;
                                 </a>
