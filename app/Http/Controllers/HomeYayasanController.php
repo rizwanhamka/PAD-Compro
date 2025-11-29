@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyProfile;
 use App\Models\Content;
 use App\Models\Program;
 use Illuminate\Http\Request;
@@ -13,14 +14,18 @@ class HomeYayasanController extends Controller
      */
     public function index()
     {
+        $profile = CompanyProfile::where('site_id', 1)->first(); // karena satu site satu profile
+
         $berita_3 = Content::orderBy("created_at", "desc")
             ->take(3)
             ->get();
+
         $program_3 = Program::orderBy("created_at", "desc")
             ->take(3)
             ->get();
-        return view("sites.yayasan.home", compact("berita_3","program_3"));
-    }
+
+        return view("sites.yayasan.home", compact("berita_3", "program_3", "profile"));
+}
 
     /**
      * Show the form for creating a new resource.

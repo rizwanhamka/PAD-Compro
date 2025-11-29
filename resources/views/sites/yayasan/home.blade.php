@@ -32,10 +32,12 @@
 
         <!-- Content -->
         <div class="relative z-10 flex flex-col items-center justify-center h-full px-10 text-center text-white text-shadow-soft">
-            <h1 class="text-5xl font-bold mb-6">Matho’liul Huda</h1>
-            <p class="max-w-3xl leading-relaxed text-lg">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores necessitatibus, eveniet dolorem laborum incidunt sed recusandae consequatur sapiente nisi itaque quo magni dolore corporis a vel animi amet sit placeat voluptatibus fugit facilis hic est eaque nesciunt. Consectetur, aliquam perspiciatis.
+
+            <h1 class="text-5xl font-bold mb-6">{{ $profile->title }}</h1>
+            <p class="max-w-3xl leading-relaxed text-lg break-words">
+                {{ $profile->deskripsi }}
             </p>
+
         </div>
 
     </div>
@@ -70,7 +72,7 @@
                             About us
                         </span>
                         <p class="text-gray-700 leading-relaxed text-justify">
-                            Yayasan berprinsip Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse accumsan hendrerit neque eget vehicula. Vivamus a urna eleifend, luctus metus dignissim, gravida nisi. Fusce auctor, lectus at bibendum aliquet, nisl augue ultrices lorem, at egestas diam augue suscipit urna. Nam iaculis egestas ligula vitae malesuada.
+                            {{ $profile->about_us }}
                         </p>
                     </div>
                 </div>
