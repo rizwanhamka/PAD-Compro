@@ -8,7 +8,7 @@
                 alt="Logo"
                 class="w-full h-full object-contain brightness-0 invert">
             </div>
-            <a href="/" class="text-white text-2xl font-bold tracking-wider">
+            <a href="/sma" class="text-white text-2xl font-bold tracking-wider">
                 SMA <span class="font-normal">Matho'liul Huda</span>
             </a>
         </div>

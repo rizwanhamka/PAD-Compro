@@ -79,8 +79,15 @@
                                 @endif
                             </td>
                             <td class="p-4 space-x-2">
-                                <button onclick="editBerita({{ $content->id }}, '{{ addslashes($content->title) }}', '{{ addslashes($content->body) }}')"
-                                        class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
+                                <button
+                                    type="button"
+                                    data-id="{{ $content->id }}"
+                                    data-title="{{ $content->title }}"
+                                    data-body="{{ $content->body }}"
+                                    onclick="editBerita(this)"
+                                    class="text-blue-600 hover:text-blue-800 font-medium">
+                                    Edit
+                                </button>
                                 <form action="{{ route('dashboard.berita.destroy', ['site' => $site, 'content' => $content->id]) }}" method="POST" class="inline delete-form">
                                     @csrf
                                     @method('DELETE')
@@ -156,18 +163,30 @@
             modal.classList.remove('active');
         }
 
-        function editBerita(id, title, body) {
-            modal.classList.add('active');
-            titleEl.innerText = 'Edit Berita';
-            document.getElementById('berita_id').value = id;
-            document.getElementById('title').value = title;
-            document.getElementById('body').value = body;
-            form.action = "{{ route('dashboard.berita.update', ['site' => $site, 'content' => 'CONTENT_ID']) }}"
-    .replace('CONTENT_ID', id);
-            form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
-            form.insertAdjacentHTML('beforeend', '<input type="hidden" name="_method" value="PUT">');
-        }
+    function editBerita(element) {
+        // 1. Ambil data dari atribut tombol
+        const id = element.getAttribute('data-id');
+        const title = element.getAttribute('data-title');
+        const body = element.getAttribute('data-body');
 
+        // 2. Buka Modal
+        modal.classList.add('active');
+        titleEl.innerText = 'Edit Berita';
+
+        // 3. Isi Form
+        document.getElementById('berita_id').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('body').value = body;
+
+        // 4. Update URL Action Form
+        // Pastikan URL route dummy menggunakan ID sembarang (misal 0) agar bisa di-replace
+        let url = "{{ route('dashboard.berita.update', ['site' => $site, 'content' => 0]) }}";
+        form.action = url.replace('/0', '/' + id);
+
+        // 5. Tambahkan Method PUT (untuk Laravel update)
+        form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
+        form.insertAdjacentHTML('beforeend', '<input type="hidden" name="_method" value="PUT">');
+    }
         function confirmDelete(button) {
             Swal.fire({
                 title: 'Yakin ingin menghapus?',
@@ -182,6 +201,30 @@
                 if (result.isConfirmed) button.closest('form').submit();
             });
         }
+
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+
+    fileInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const fileSize = this.files[0].size;
+
+                if (fileSize > maxSizeInBytes) {
+                    // 1. Reset nilai input agar file tidak jadi di-upload
+                    this.value = '';
+
+                    // 2. Tampilkan Peringatan dengan SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ukuran File Terlalu Besar',
+                        text: 'Maksimal ukuran file gambar adalah 2 MB. Silakan pilih gambar lain.',
+                        confirmButtonColor: '#15803d'
+                    });
+                }
+            }
+        });
+    });
     </script>
 
     @if (session('success'))

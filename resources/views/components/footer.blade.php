@@ -3,6 +3,7 @@
     $seg = request()->segment(1) ?? '';
 @endphp
 @props(['profile'])
+
 <footer class="
     @if($seg === '' || $seg === null) bg-green-900
     @elseif($seg === 'tk') bg-red-900

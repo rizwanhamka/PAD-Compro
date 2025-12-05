@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Staff;
 use App\Models\Content;
 use App\Models\Program;
+use App\Models\CompanyProfile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StaffController;
@@ -31,6 +33,7 @@ use App\Http\Controllers\SmpGalleryController;
 use App\Http\Controllers\SmpProgramController;
 use App\Http\Controllers\HomeYayasanController;
 use App\Http\Controllers\YayasanStaffController;
+use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\YayasanArticleController;
 use App\Http\Controllers\YayasanProgramController;
 
@@ -213,7 +216,14 @@ Route::middleware('auth')->group(function () {
 
             // DASHBOARD UTAMA
             Route::get('/', function ($site) {
-                return view('admin.dashboard', compact('site'));
+                $site_id = (int) ($site);
+                // dd($site);
+                $contents = Content::where('site_id', $site_id)->latest()->get();
+                $programs = Program::where('site_id', $site_id)->latest()->get();
+                $staffs = Staff::where('site_id', $site)->latest()->get();
+                $profilezz = CompanyProfile::where('site_id', $site)->latest()->get();
+
+                return view('admin.dashboard', compact('site', 'contents', 'programs', 'staffs'));
             })->name('index');
 
 
@@ -284,6 +294,20 @@ Route::middleware('auth')->group(function () {
 
             Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])
                 ->name('staff.destroy');
+
+            // COMPANY PROFILE MANAGEMENT
+            Route::get('/profile', [CompanyProfileController::class, 'index'])
+                ->name('profile.index');
+
+            Route::post('/profile', [CompanyProfileController::class, 'store'])
+                ->name('profile.store');
+
+            Route::put('/profile/{profile}', [CompanyProfileController::class, 'update'])
+                ->name('profile.update');
+
+            Route::delete('/profile/{profile}', [CompanyProfileController::class, 'destroy'])
+                ->name('profile.destroy');
+
 
         });
 

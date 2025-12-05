@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+@php
+    // Ambil YouTube ID dari berbagai format URL
+
+    $videoId = $profile->youtube
+@endphp
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,10 +27,15 @@
     <div class="relative w-full h-screen overflow-hidden">
         <!-- Carousel wrapper -->
         <div id="carousel" class="absolute inset-0 flex transition-transform duration-1000">
-            <img src="{{ asset('images/carousel1.jpg') }}" class="w-full h-screen object-cover flex-shrink-0" alt="Slide 1">
-            <img src="{{ asset('images/carousel2.jpg') }}" class="w-full h-screen object-cover flex-shrink-0" alt="Slide 2">
-            <img src="{{ asset('images/carousel3.jpg') }}" class="w-full h-screen object-cover flex-shrink-0" alt="Slide 3">
+            @foreach (['carousel_1', 'carousel_2', 'carousel_3'] as $key)
+                @if (!empty($profile->$key))
+                    <img src="{{ Storage::url($profile->$key) }}"
+                        class="w-full h-screen object-cover flex-shrink-0"
+                        alt="Slide">
+                @endif
+            @endforeach
         </div>
+
 
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/30"></div>
@@ -50,9 +60,12 @@
                 <div class="flex flex-col md:flex-row items-center gap-10">
                     <!-- Video / Icon -->
                     <div class="w-full md:w-1/3 lg:w-2/5">
-                        <div class="relative aspect-video rounded-2xl overflow-hidden shadow-lg group cursor-pointer" id="video-container">
+                        <div class="relative aspect-video rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+                            id="video-container"
+                            onclick="openVideo('{{ $videoId }}')">
+
                             <!-- Thumbnail -->
-                            <img src="https://img.youtube.com/vi/yGNWylAunPc/hqdefault.jpg"
+                            <img src="https://img.youtube.com/vi/{{ $videoId }}/hqdefault.jpg"
                                 alt="YouTube Thumbnail"
                                 class="w-full h-full object-cover">
 
@@ -65,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Text -->
                     <div class="w-full md:w-2/3 lg:w-3/5">

@@ -7,72 +7,77 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller
-{public function index($site)
 {
-    $staffs = Staff::where('site_id', (int)$site)->get();
-    return view('admin.staff', compact('staffs', 'site'));
-}
-
-public function store(Request $request, $site)
-{
-    $site_id = (int) $site;
-
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'nip' => 'nullable|string|max:50',
-        'role' => 'required|string|max:100',
-        'email' => 'required|email',
-        'instagram' => 'nullable|string|max:255',
-        'facebook' => 'nullable|string|max:255',
-        'linkedin' => 'nullable|string|max:255',
-        'blog' => 'nullable|string|max:255',
-        'photo' => 'nullable|image|max:2048',
-    ]);
-
-    if ($request->hasFile('photo')) {
-        $validated['photo'] = $request->file('photo')->store('staffs', 'public');
+    public function index($site)
+    {
+        // Pastikan $site di-cast ke int jika di DB site_id adalah integer
+        // Jika site_id uuid/string, hapus (int)
+        $staffs = Staff::where('site_id', $site)->latest()->get();
+        return view('admin.staff', compact('staffs', 'site'));
     }
 
-    $validated['site_id'] = $site_id;
+    public function store(Request $request, $site)
+    {
+        $validated = $request->validate([
+            'name'      => 'required|string|max:255',
+            'nip'       => 'nullable|string|max:50',
+            'role'      => 'required|string|max:100',
+            // Cek unik di tabel staffs kolom email
+            'email'     => 'required|email|unique:staffs,email',
+            'instagram' => 'nullable|string|max:255',
+            'facebook'  => 'nullable|string|max:255',
+            'linkedin'  => 'nullable|string|max:255',
+            'blog'      => 'nullable|string|max:255',
+            'photo'     => 'nullable|image|max:2048', // Max 2MB
+        ]);
 
-    Staff::create($validated);
+        if ($request->hasFile('photo')) {
+            $validated['photo'] = $request->file('photo')->store('staffs', 'public');
+        }
 
-    return back()->with('success', 'Staff berhasil ditambahkan!');
-}
+        $validated['site_id'] = $site;
 
-public function update(Request $request, $site, Staff $staff)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'nip' => 'nullable|string|max:50',
-        'role' => 'required|string|max:100',
-        'email' => 'required|email',
-        'instagram' => 'nullable|string|max:255',
-        'facebook' => 'nullable|string|max:255',
-        'linkedin' => 'nullable|string|max:255',
-        'blog' => 'nullable|string|max:255',
-        'photo' => 'nullable|image|max:2048',
-    ]);
+        Staff::create($validated);
 
-    if ($request->hasFile('photo')) {
-        if ($staff->photo) Storage::disk('public')->delete($staff->photo);
-        $validated['photo'] = $request->file('photo')->store('staffs', 'public');
+        return back()->with('success', 'Staff berhasil ditambahkan!');
     }
 
-    $staff->update($validated);
+    public function update(Request $request, $site, Staff $staff)
+    {
+        $validated = $request->validate([
+            'name'      => 'required|string|max:255',
+            'nip'       => 'nullable|string|max:50',
+            'role'      => 'required|string|max:100',
+            // PENTING: exclude id user saat ini agar tidak error "email has been taken"
+            'email'     => 'required|email|unique:staffs,email,' . $staff->id,
+            'instagram' => 'nullable|string|max:255',
+            'facebook'  => 'nullable|string|max:255',
+            'linkedin'  => 'nullable|string|max:255',
+            'blog'      => 'nullable|string|max:255',
+            'photo'     => 'nullable|image|max:2048',
+        ]);
 
-    return back()->with('success', 'Staff berhasil diperbarui!');
-}
+        if ($request->hasFile('photo')) {
+            // Hapus foto lama jika ada
+            if ($staff->photo) {
+                Storage::disk('public')->delete($staff->photo);
+            }
+            $validated['photo'] = $request->file('photo')->store('staffs', 'public');
+        }
 
-public function destroy($site, Staff $staff)
-{
-    if ($staff->photo) {
-        Storage::disk('public')->delete($staff->photo);
+        $staff->update($validated);
+
+        return back()->with('success', 'Staff berhasil diperbarui!');
     }
 
-    $staff->delete();
+    public function destroy($site, Staff $staff)
+    {
+        if ($staff->photo) {
+            Storage::disk('public')->delete($staff->photo);
+        }
 
-    return back()->with('success', 'Staff berhasil dihapus!');
-}
+        $staff->delete();
 
+        return back()->with('success', 'Staff berhasil dihapus!');
+    }
 }

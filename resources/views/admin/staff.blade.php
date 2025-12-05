@@ -11,13 +11,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap');
         body { font-family: 'Manrope', sans-serif; }
         .modal {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.4);
-            z-index: 50;
+            position: fixed; inset: 0; display: none;
+            align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.4); z-index: 50;
         }
         .modal.active { display: flex; animation: fadeIn 0.25s ease-in-out; }
         @keyframes fadeIn {
@@ -49,6 +45,18 @@
                 </form>
             </div>
         </div>
+
+        {{-- TAMPILKAN ERROR JIKA ADA --}}
+        @if ($errors->any())
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+                <p class="font-bold">Gagal Menyimpan!</p>
+                <ul class="list-disc pl-5 mt-1 text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         {{-- Table --}}
         <div class="bg-white shadow-lg rounded-xl overflow-hidden">
@@ -85,15 +93,23 @@
                                 @if($staff->blog)<a href="{{ $staff->blog }}" target="_blank" class="text-orange-500 hover:text-orange-600"><i class="fas fa-globe"></i></a>@endif
                             </td>
                             <td class="p-4 space-x-2">
-                                <button onclick="editStaff({{ $staff->id }}, '{{ addslashes($staff->name) }}', '{{ $staff->nip }}', '{{ $staff->role }}', '{{ $staff->email }}', '{{ $staff->instagram }}', '{{ $staff->facebook }}', '{{ $staff->linkedin }}', '{{ $staff->blog }}')"
-                                    class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
-                                <form action="{{ route('dashboard.staff.destroy', ['site' => $site, 'staff' => $staff->id]) }}"
-                                    method="POST">
+                                <button onclick="editStaff(
+                                    '{{ $staff->id }}',
+                                    '{{ addslashes($staff->name) }}',
+                                    '{{ $staff->nip }}',
+                                    '{{ $staff->role }}',
+                                    '{{ $staff->email }}',
+                                    '{{ $staff->instagram }}',
+                                    '{{ $staff->facebook }}',
+                                    '{{ $staff->linkedin }}',
+                                    '{{ $staff->blog }}'
+                                )" class="text-blue-600 hover:text-blue-800 font-medium">Edit</button>
+
+                                <form action="{{ route('dashboard.staff.destroy', ['site' => $site, 'staff' => $staff->id]) }}" method="POST" class="inline-block" onsubmit="return confirmDelete(event)">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="text-red-600">Hapus</button>
+                                    <button type="submit" class="text-red-600 hover:text-red-800">Hapus</button>
                                 </form>
-
                             </td>
                         </tr>
                     @empty
@@ -106,51 +122,55 @@
 
     {{-- Modal --}}
     <div id="modal" class="modal">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-xl p-6 relative">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-xl p-6 relative overflow-y-auto max-h-[90vh]">
             <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">✕</button>
             <h2 class="text-xl font-bold mb-4" id="form-title">Tambah Staff</h2>
 
-            <form id="staffForm" action="{{ route('dashboard.staff.store', ['site' => $site]) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-
+            {{-- Form tanpa action di awal, diisi via JS --}}
+            <form id="staffForm" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
+                {{-- Container untuk method PUT (disuntikkan via JS saat edit) --}}
+                <div id="method-container"></div>
+
                 <input type="hidden" name="id" id="staff_id">
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm text-gray-600 mb-1">Nama</label>
-                        <input type="text" name="name" id="name" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
+                        <label class="block text-sm text-gray-600 mb-1">Nama <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" id="name" required class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">NIP</label>
                         <input type="text" name="nip" id="nip" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-600 mb-1">Peran</label>
-                        <input type="text" name="role" id="role" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
+                        <label class="block text-sm text-gray-600 mb-1">Peran <span class="text-red-500">*</span></label>
+                        <input type="text" name="role" id="role" required class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-600 mb-1">Email</label>
-                        <input type="email" name="email" id="email" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
+                        <label class="block text-sm text-gray-600 mb-1">Email <span class="text-red-500">*</span></label>
+                        <input type="email" name="email" id="email" required class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Instagram</label>
-                        <input type="text" name="instagram" id="instagram" placeholder="username saja, tanpa @" class="w-full border rounded-md px-3 py-2">
+                        <input type="text" name="instagram" id="instagram" placeholder="URL Profil" class="w-full border rounded-md px-3 py-2">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Facebook</label>
-                        <input type="text" name="facebook" id="facebook" placeholder="username profil" class="w-full border rounded-md px-3 py-2">
+                        <input type="text" name="facebook" id="facebook" placeholder="URL Profil" class="w-full border rounded-md px-3 py-2">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">LinkedIn</label>
-                        <input type="text" name="linkedin" id="linkedin" placeholder="username profil" class="w-full border rounded-md px-3 py-2">
+                        <input type="text" name="linkedin" id="linkedin" placeholder="URL Profil" class="w-full border rounded-md px-3 py-2">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-600 mb-1">Blog</label>
-                        <input type="text" name="blog" id="blog" placeholder="contoh: blogkita.com" class="w-full border rounded-md px-3 py-2">
+                        <input type="text" name="blog" id="blog" placeholder="URL Blog" class="w-full border rounded-md px-3 py-2">
                     </div>
                     <div class="col-span-2">
                         <label class="block text-sm text-gray-600 mb-1">Foto</label>
                         <input type="file" name="photo" id="photo" accept="image/*" class="w-full border rounded-md px-3 py-2">
+                        <p class="text-xs text-gray-400 mt-1">*Kosongkan jika tidak ingin mengubah foto saat edit.</p>
                     </div>
                 </div>
 
@@ -162,18 +182,28 @@
         </div>
     </div>
 
-    {{-- Script --}}
+    {{-- Script Penting --}}
     <script>
+        // 1. DEFINISI VARIABEL PHP KE JS
+        const site = "{{ $site }}";
+
         const modal = document.getElementById('modal');
         const form = document.getElementById('staffForm');
         const titleEl = document.getElementById('form-title');
+        const methodContainer = document.getElementById('method-container');
+        const staffIdInput = document.getElementById('staff_id');
 
         function openModal() {
             modal.classList.add('active');
-            form.reset();
+            form.reset(); // Reset isi form
+
+            // Mode Tambah
             titleEl.innerText = "Tambah Staff";
             form.action = `/dashboard/${site}/staff`;
-            form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
+
+            // Hapus method PUT (agar jadi POST murni)
+            methodContainer.innerHTML = '';
+            staffIdInput.value = '';
         }
 
         function closeModal() {
@@ -182,8 +212,12 @@
 
         function editStaff(id, name, nip, role, email, ig, fb, ln, blog) {
             modal.classList.add('active');
+
+            // Mode Edit
             titleEl.innerText = 'Edit Staff';
-            document.getElementById('staff_id').value = id;
+
+            // Isi form dengan data lama
+            staffIdInput.value = id;
             document.getElementById('name').value = name;
             document.getElementById('nip').value = nip;
             document.getElementById('role').value = role;
@@ -192,12 +226,18 @@
             document.getElementById('facebook').value = fb || '';
             document.getElementById('linkedin').value = ln || '';
             document.getElementById('blog').value = blog || '';
+
+            // Set URL Update
             form.action = `/dashboard/${site}/staff/${id}`;
-            form.querySelectorAll('input[name="_method"]').forEach(el => el.remove());
-            form.insertAdjacentHTML('beforeend', '@method("PUT")');
+
+            // Tambahkan Input Hidden Method PUT untuk Laravel
+            methodContainer.innerHTML = '<input type="hidden" name="_method" value="PUT">';
         }
 
-        function confirmDelete(button) {
+        function confirmDelete(event) {
+            event.preventDefault(); // Stop form submit langsung
+            const form = event.target;
+
             Swal.fire({
                 title: 'Yakin ingin menghapus?',
                 text: "Data yang dihapus tidak bisa dikembalikan.",
@@ -208,7 +248,9 @@
                 confirmButtonText: 'Ya, hapus',
                 cancelButtonText: 'Batal'
             }).then((result) => {
-                if (result.isConfirmed) button.closest('form').submit();
+                if (result.isConfirmed) {
+                    form.submit();
+                }
             });
         }
     </script>

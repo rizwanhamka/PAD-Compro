@@ -14,7 +14,7 @@ class ContentController extends Controller
 public function index($site)
 {
     $site_id = (int) ($site);
-
+    // dd($site_id);
     $contents = Content::where('site_id', $site_id)->latest()->get();
     return view('admin.berita', compact('contents', 'site'));
 }

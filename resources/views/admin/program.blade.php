@@ -201,6 +201,29 @@
                 if (result.isConfirmed) button.closest('form').submit();
             });
         }
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+    const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+
+    fileInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const fileSize = this.files[0].size;
+
+                if (fileSize > maxSizeInBytes) {
+                    // 1. Reset nilai input agar file tidak jadi di-upload
+                    this.value = '';
+
+                    // 2. Tampilkan Peringatan dengan SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ukuran File Terlalu Besar',
+                        text: 'Maksimal ukuran file gambar adalah 2 MB. Silakan pilih gambar lain.',
+                        confirmButtonColor: '#15803d'
+                    });
+                }
+            }
+        });
+    });
     </script>
 
     @if (session('success'))
