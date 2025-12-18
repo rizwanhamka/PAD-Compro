@@ -8,7 +8,7 @@
                 <img src="{{ asset('images/logo2.png') }}" alt="Logo Yayasan" class="w-full h-full object-contain">
             </div>
             <a href="/" class="text-white text-2xl font-bold tracking-wider">
-                YAYASAN <span class="font-normal">Matho'liul Huda</span>
+                YAYASAN <span class="font-normal">Matholi'ul Huda</span>
             </a>
         </div>
 
